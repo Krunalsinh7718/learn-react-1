@@ -4,6 +4,7 @@ function createHtmlElement(elementObj){
    
     for (const key in props) {
         if (Object.hasOwnProperty.call(props, key)) {
+            if(key === 'children') continue;
             element.setAttribute(key,  props[key]);
         }
     }
