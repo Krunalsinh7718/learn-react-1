@@ -1,11 +1,12 @@
 import "./App.css";
+import AppCounter from "./app-counter/AppCounter";
 
 function App() {
 
   return (
     <>
       
-      <h1>Hello React</h1>
+      <AppCounter />
     </>
   )
 }

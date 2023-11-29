@@ -14,15 +14,15 @@ const reactElement = React.createElement(
 //   [reactElement,anotherElement]
 // )
 
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <>
-//     <App />
-//   </>
-// )
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-     {anotherElement}
-     {reactElement}
+    <App />
   </>
 )
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <>
+//      {anotherElement}
+//      {reactElement}
+//   </>
+// )
