@@ -1,5 +1,5 @@
 function createHtmlElement(elementObj){
-    const {type, props, content} = elementObj
+    const {type, props, children} = elementObj
     const element = document.createElement(type);
    
     for (const key in props) {
@@ -8,7 +8,7 @@ function createHtmlElement(elementObj){
         }
     }
 
-    element.innerText = content;
+    element.innerText = children;
 
     return element;
 }
@@ -20,7 +20,7 @@ function App(){
             class : "main-title",
             id : "mainTitle"
         },
-        content : "Hello Javascript"
+        children : "Hello Javascript"
     }
 
     const textContent = {
@@ -29,7 +29,7 @@ function App(){
             class : "text-content",
             id : "mainText"
         },
-        content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit." 
+        children : "Lorem ipsum dolor sit amet, consectetur adipisicing elit." 
     }
     return [createHtmlElement(mainTitle), createHtmlElement(textContent)];
 }
