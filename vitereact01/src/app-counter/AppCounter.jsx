@@ -4,7 +4,7 @@ function AppCounter() {
     let [counter, setCounter] = useState(0);
 
     const incrCount = () => {
-        setCounter(counter + 1)
+        setCounter(prev => prev + 1)
     }
     const decrCount = () => {
         setCounter(Math.max(counter - 1, 0))
@@ -18,5 +18,5 @@ function AppCounter() {
         </>
     );
 }
-
+ 
 export default AppCounter;
