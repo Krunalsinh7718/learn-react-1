@@ -1,10 +1,9 @@
 import { useState } from "react";
 
 function ColorChanger() {
-  const [bgColor, setBgColor] = useState("olive");
   return (
     <>
-      <div className="min-h-screen" style={{ backgroundColor: bgColor }}>
+      <div className="min-h-screen" style={{ backgroundColor: "olive" }}>
         <div className="fixed bottom-10 left-0 right-0 flex p-4 m-auto max-w-xl bg-gray-200 rounded-md flex gap-4">
           <button
             type="button"
