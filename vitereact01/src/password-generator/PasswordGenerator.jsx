@@ -1,4 +1,15 @@
+import { useState } from "react";
+
 function PasswordGenerator() {
+    const a2z = "abcdefghijklmnopqrstuvwxyz";
+    const o29 = "1234567890";
+    const spChar = "`!@#$%^&*()_+{}<>?{}.,-="
+
+    const [password, setPassword] = useState("abcdefghijklm");
+    
+    
+
+
     return (<>
         <div className="min-h-screen" style={{ backgroundColor: "#666" }}>
             <div className="fixed top-10 left-0 right-0 p-4 m-auto max-w-xl bg-gray-200 rounded-md flex flex-col gap-2">
@@ -6,6 +17,7 @@ function PasswordGenerator() {
                     <input
                         class="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                         type="text"
+                        value={password}
                     />
                     <button
                         type="button"
