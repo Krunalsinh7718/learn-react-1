@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function PasswordGenerator() {
     const [password, setPassword] = useState("pA$$W0rD");
@@ -8,41 +8,37 @@ function PasswordGenerator() {
 
     const passTextElement = useRef(null);
 
-    const a2z = "abcdefghijklmnopqrstuvwxyz";
-    const o29 = "1234567890";
-    const spChar = "`!@#$%^&*()_+{}<>?{}.,-=";
+ 
 
-    function getPassword(){
-        let password = '';
+    const getPassword = useCallback(() => {
+        let newPassword = '';
+        let passwordStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        if(numEnabled){
+            passwordStr += "1234567890";
+        }
+        if(spCharEnabled){
+            passwordStr += "!@#$%&*?";
+        }
         
         for (let i = 0; i < passwordLength; i++) {
-            const passCharSelect = Math.floor(Math.random() * 3 + 1);
-            
-           if(passCharSelect === 1 && numEnabled){
-                password += o29[Math.floor(Math.random() * o29.length)]
-            }else if(passCharSelect === 2 && spCharEnabled){
-                password += spChar[Math.floor(Math.random() * spChar.length)]
-            }else{
-                password += a2z[Math.floor(Math.random() * a2z.length)]
-           }
+            let charIndex = Math.floor(Math.random() * passwordStr.length);
+            newPassword += passwordStr[charIndex]
             
         }
-        return password;
-    }
+        setPassword(newPassword);
+    },[numEnabled, spCharEnabled, passwordLength, setPassword])
 
-    function handleCopyText(){
+    const handleCopyText = useCallback(() => {
         let currentEle = passTextElement.current;
-        currentEle.select();
-        currentEle.setSelectionRange(0, 99999); // For mobile devices
-        navigator.clipboard.writeText(currentEle.value);
-    }
+        currentEle?.select();
+        currentEle?.setSelectionRange(0, 99999); // For mobile devices
+        window.navigator.clipboard.writeText(currentEle.value);
+    },[password])
 
     useEffect(() => {
-        setPassword(getPassword())
-    },[numEnabled]);
-    useEffect(() => {
-        setPassword(getPassword())
-    },[spCharEnabled]);
+        getPassword();
+    },[numEnabled, spCharEnabled, passwordLength, getPassword]);
+    
     
 
 
@@ -73,23 +69,27 @@ function PasswordGenerator() {
                         max="16" 
                         value={passwordLength} 
                         onChange={ e => setPasswordLength(parseInt(e.target.value)) }
-                        onMouseUp={ e => setPassword(getPassword())}/>
+                        />
                         <span style={{width : "20px"}}>{passwordLength}</span>
                     </div>
                     <div className="flex gap-2">
                         <input 
                         type="checkbox" 
                         id="specialChar" 
-                        checked={spCharEnabled} 
-                        onChange={e => setSpCharEnabled(e.target.checked)}/>
+                        defaultChecked={spCharEnabled} 
+                        onChange={ () => {
+                            setSpCharEnabled(prev => !prev)
+                        }}/>
                         <label htmlFor="specialChar">Special Character</label>
                     </div>
                     <div className="flex gap-2">
                         <input 
                         type="checkbox" 
                         id="passNumbers"
-                        checked={numEnabled} 
-                        onChange={e => setNumEnabled(e.target.checked)}/>
+                        defaultChecked={numEnabled} 
+                        onChange={() => {
+                            setNumEnabled(prev => !prev)
+                        }}/>
                         <label htmlFor="passNumbers">Numbers</label>
                     </div>
                 </div>
