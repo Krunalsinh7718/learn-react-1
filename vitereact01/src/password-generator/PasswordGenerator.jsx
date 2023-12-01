@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 function PasswordGenerator() {
-    const [password, setPassword] = useState("abcdefghijklm");
+    const [password, setPassword] = useState("pA$$W0rD");
     const [passwordLength, setPasswordLength] = useState(10);
     const [numEnabled, setNumEnabled] = useState(true);
     const [spCharEnabled, setSpCharEnabled] = useState(true);
