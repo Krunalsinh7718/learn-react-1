@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function PasswordGenerator() {
     const [password, setPassword] = useState("abcdefghijklm");
-    const [passwordLength, setPasswordLength] = useState(13);
+    const [passwordLength, setPasswordLength] = useState(10);
     const [numEnabled, setNumEnabled] = useState(true);
     const [spCharEnabled, setSpCharEnabled] = useState(true);
+
+    const passTextElement = useRef(null);
 
     const a2z = "abcdefghijklmnopqrstuvwxyz";
     const o29 = "1234567890";
@@ -27,8 +29,13 @@ function PasswordGenerator() {
         }
         return password;
     }
-    // let passwordStr = getPassword();
-    // console.log(passwordStr, passwordStr.length);
+
+    function handleCopyText(){
+        let currentEle = passTextElement.current;
+        currentEle.select();
+        currentEle.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(currentEle.value);
+    }
 
     useEffect(() => {
         setPassword(getPassword())
@@ -43,13 +50,15 @@ function PasswordGenerator() {
         <div className="min-h-screen" style={{ backgroundColor: "#444" }}>
             <div className="fixed top-10 left-0 right-0 p-4 m-auto max-w-xl bg-gray-200 rounded-md flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2 ">
-                    <div className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50">
-                        <span>{password}</span>
-                    </div>
-                   
+                    <input 
+                    className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    ref={passTextElement}
+                    value={password} 
+                    readOnly/>
                     <button
                         type="button"
                         className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                        onClick={handleCopyText}
                     >
                         Copy
                     </button>
@@ -60,8 +69,8 @@ function PasswordGenerator() {
                         type="range" 
                         id="volume" 
                         name="volume" 
-                        min="0" 
-                        max="13" 
+                        min="8" 
+                        max="16" 
                         value={passwordLength} 
                         onChange={ e => setPasswordLength(parseInt(e.target.value)) }
                         onMouseUp={ e => setPassword(getPassword())}/>
