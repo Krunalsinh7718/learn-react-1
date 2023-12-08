@@ -5,6 +5,10 @@ import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
 import Profile from "./Profile";
+import User from "./User";
+import Github from "./Github";
+import Learn from "./Learn";
+import Canvas from "./Canvas";
 
 export {
     About,
@@ -13,5 +17,9 @@ export {
     Header,
     Home,
     Login,
-    Profile
+    Profile,
+    User,
+    Github,
+    Learn,
+    Canvas
 }

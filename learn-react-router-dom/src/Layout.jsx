@@ -8,4 +8,13 @@ function Layout() {
         <Footer />
     </>);
 }
-export default Layout;
+
+function LayoutFull() {
+    return (
+    <>
+        <Header />
+            <Outlet />
+        <Footer />
+    </>);
+}
+export { Layout, LayoutFull} ;

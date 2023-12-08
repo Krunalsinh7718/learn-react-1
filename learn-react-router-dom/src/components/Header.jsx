@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Header() {
+  const checkActive = ({isActive}) => `${isActive ? 'text-red-500' : 'text-gray-800'}`
   return (
     <div className="relative w-full bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
@@ -24,28 +25,50 @@ function Header() {
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-8">
             <li>
-              <a
-                href="#"
-                className="text-sm font-semibold text-gray-800 hover:text-gray-900"
-              >
-                Home
-              </a>
+              <NavLink to="/" className={checkActive}>
+              Home
+              </NavLink>
+             
             </li>
             <li>
-              <a
-                href="#"
-                className="text-sm font-semibold text-gray-800 hover:text-gray-900"
-              >
+              <NavLink to="/about" className={checkActive}>
                 About
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-sm font-semibold text-gray-800 hover:text-gray-900"
-              >
+              <NavLink to="/contactUs" className={checkActive}>
+              
                 Contact
-              </a>
+              </NavLink>
+              
+            </li>
+            <li>
+              <NavLink to="/user/Krunalsinh" className={checkActive}>
+              
+                User
+              </NavLink>
+              
+            </li>
+            <li>
+              <NavLink to="/github" className={checkActive}>
+              
+                Github
+              </NavLink>
+              
+            </li>
+            <li>
+              <NavLink to="/learn" className={checkActive}>
+              
+                Learn
+              </NavLink>
+              
+            </li>
+            <li>
+              <NavLink to="/login" className={checkActive}>
+              
+                Login
+              </NavLink>
+              
             </li>
           </ul>
         </div>
