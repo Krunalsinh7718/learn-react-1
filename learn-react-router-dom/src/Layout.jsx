@@ -9,12 +9,5 @@ function Layout() {
     </>);
 }
 
-function LayoutFull() {
-    return (
-    <>
-        <Header />
-            <Outlet />
-        <Footer />
-    </>);
-}
-export { Layout, LayoutFull} ;
+
+export { Layout} ;

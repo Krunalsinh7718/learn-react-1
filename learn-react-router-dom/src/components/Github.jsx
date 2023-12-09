@@ -13,7 +13,7 @@ function Github() {
     return (<>
         <div className="text-center">
             <div>Github</div>
-            <div><img src={data?.avatar_url} alt="User Image" height="200" width="200" className="m-auto h-6 w-6 rounded-full"/></div>
+            <div><img src={data?.avatar_url} alt="User Image" height="200" width="200" className="m-auto h-300 w-300 rounded-full"/></div>
             <div>followers: {data?.followers}</div>
         </div>
     </>);
@@ -22,6 +22,7 @@ function Github() {
 export default Github;
 
 export const GitLoaderData = async () => {
-    const data = await fetch(`https://api.github.com/users/${user}`);
-    return data.json();
+    const response = await fetch(`https://api.github.com/users/${user}`);
+    const data = await response.json();
+    return data;
 }

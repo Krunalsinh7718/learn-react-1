@@ -9,6 +9,7 @@ import User from "./User";
 import Github from "./Github";
 import Learn from "./Learn";
 import Canvas from "./Canvas";
+import NoMatch from "./NoMatch";
 
 export {
     About,
@@ -21,5 +22,6 @@ export {
     User,
     Github,
     Learn,
-    Canvas
+    Canvas,
+    NoMatch
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {Layout, LayoutFull} from './Layout'
+import {Layout} from './Layout'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { About, Canvas, ContactUs, Github, Home, Learn, Login, User } from './components'
+import { About, Canvas, ContactUs, Github, Home, Learn, Login, NoMatch, User } from './components'
 import { GitLoaderData } from './components/Github'
 
 // const router = createBrowserRouter([
@@ -38,15 +38,19 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />}/>
       <Route path="contactUs" element={<ContactUs />}/>
       <Route path="user/:userid" element={<User />}/>
+
       <Route 
-      loader={GitLoaderData}
-      path="github" 
-      element={<Github />}/>
+        loader={GitLoaderData}
+        path="github" 
+        element={<Github />}
+      />
       <Route path="learn" element={<Learn />}>
         <Route path="canvas" element={<Canvas /> }/>
+        <Route path="*" element={<NoMatch />} />
       </Route>
     </Route>,
-    <Route path="/login" element={<Login />} />
+    <Route path="/login" element={<Login />} />,
+    <Route path="*" element={<NoMatch />} />
   ])
 )
 
