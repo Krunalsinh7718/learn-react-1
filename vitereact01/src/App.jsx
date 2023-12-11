@@ -18,8 +18,8 @@ function App() {
       <UserCard name="Angela" post ="loream ipsum lorema ipsum" /> */}
       {/* <PasswordGenerator /> */}
       {/* <MainApp /> */}
-      {/* <CurrencyMain /> */}
-      <CurrencyConvMain />
+      <CurrencyMain />
+      {/* <CurrencyConvMain /> */}
     </>
   )
 }

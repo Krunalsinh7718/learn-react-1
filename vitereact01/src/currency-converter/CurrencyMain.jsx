@@ -18,11 +18,26 @@ function CurrencyMain() {
         setTo(from);
 
         setConvertedAmount(
-            prevAmt => {
-                setAmount(prevAmt)
+            prevConvAmt => {
+                setAmount(prevConvAmt)
                 return amount;
             }
         )
+    }
+
+    const swap1 = (e) => {
+        e.preventDefault();
+
+        const tempAmount = amount;
+        const tempFrom = from;
+
+        setAmount(convertedAmount);
+        setFrom(to);
+
+        setConvertedAmount(tempAmount);
+        setTo(tempFrom)
+
+
     }
 
     const convert = () => {
