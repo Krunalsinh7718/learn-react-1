@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { Card, ThemeToggler } from './components/'
 import {ThemeProvider} from './context/ThemeContext'
 
@@ -29,6 +28,7 @@ function App() {
           <Card />
         </div>
     </ThemeProvider>
+
     </>
   )
 }
