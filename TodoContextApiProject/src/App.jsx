@@ -10,9 +10,12 @@ function App() {
  const [todo, setTodo] = useState([]);
   return (
     <>
+    <div className='min-h-screen bg-slate-700'>
       <TodoContextProvider value={{todo, setTodo}}>
         <TodoMain />
       </TodoContextProvider>
+    </div>
+      
     </>
   )
 }

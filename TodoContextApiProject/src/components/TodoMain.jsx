@@ -2,8 +2,10 @@ import {AddTodo, TodoList} from "./"
 
 function TodoMain() {
     return (<>
-        <AddTodo />
-        <TodoList />
+        <div className="py-6">
+            <AddTodo />
+            <TodoList />
+        </div>
     </>);
 }
 
