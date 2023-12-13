@@ -1,14 +1,16 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 function TodoItem(props) {
+  // console.log("render");
   const { todo, setTodo } = props;
   const { id, task, editable, isTaskDone } = todo;
 
   const [taskInputVal, setTaskInputVal] = useState(task);
   const taskInputRef = useRef();
 
+//  console.log("New Todo", todo);
+
   const chkId = useId();
-  const formId = useId();
 
   const handleTaksDone = (chkEvent) => {
     setTodo((prevTodo) => {
@@ -26,13 +28,12 @@ function TodoItem(props) {
     });
   };
 
-  const handleSetEditable = async () => {
-    await setTodo((prevTodo) => {
+  const handleSetEditable = () => {
+    setTodo((prevTodo) => {
       const newTodoArr = prevTodo.map((mapTodo) => {
         if (mapTodo.id === id) {
           return {
             ...mapTodo,
-            task : taskInputVal,
             editable: !mapTodo.editable,
           };
         } else {
@@ -41,9 +42,26 @@ function TodoItem(props) {
       });
       return newTodoArr;
     });
-    await taskInputRef.current?.focus();
-    
   };
+
+  const handleSubmit =  (event) => {
+    event.preventDefault();
+    setTodo((prevTodo) => {
+     const newTodoArr = prevTodo.map((mapTodo) => {
+       if (mapTodo.id === id) {
+         return {
+           ...mapTodo,
+           task: taskInputVal,
+           editable: !mapTodo.editable,
+         };
+       } else {
+         return mapTodo;
+       }
+     });
+    //  console.log("submit todo", newTodoArr);
+     return newTodoArr;
+   });
+ };
 
   const handleDelete = () => {
     setTodo((prevTodo) => {
@@ -51,6 +69,14 @@ function TodoItem(props) {
       return newTodoArr;
     });
   }
+
+  useEffect(() => {
+    if(editable) {
+      taskInputRef.current?.focus()
+    };
+  },[editable])
+
+
   return (
     <>
       <li className="flex items-center justify-between p-2 border border-gray-600">
@@ -68,7 +94,6 @@ function TodoItem(props) {
           <div className="flex gap-2 items-center">
             {editable ? (
               <div className="w-full md:w-3/3">
-                <form id={formId}>
                   <input
                     className="flex h-6 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 text-white"
                     type="text"
@@ -76,8 +101,9 @@ function TodoItem(props) {
                     ref={taskInputRef}
                     value={taskInputVal}
                     onChange={event => setTaskInputVal(event.target.value)}
+                    onKeyUp={event => event.keyCode === 13 ? handleSubmit(event) : false }
                   />
-                </form>
+                
               </div>
             ) : (
               <label
@@ -90,34 +116,40 @@ function TodoItem(props) {
           </div>
         </div>
         <div className="flex gap-2">
-          <button
-            form={formId}
-            type={editable ? 'submit' : 'button'}
-            className="rounded-full bg-black px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            onClick={handleSetEditable}
-          >
-            {editable ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="#fff"
-                height="15"
-                width="15"
-                viewBox="0 0 24 24"
-              >
-                <path d="M7 19V13H17V19H19V7.82843L16.1716 5H5V19H7ZM4 3H17L21 7V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM9 15V19H15V15H9Z"></path>
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="#fff"
-                height="15"
-                width="15"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12.8995 6.85453L17.1421 11.0972L7.24264 20.9967H3V16.754L12.8995 6.85453ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path>
-              </svg>
-            )}
-          </button>
+          {
+            editable ? 
+            <button
+              onClick={handleSubmit}
+              className="rounded-full bg-black px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#fff"
+                  height="15"
+                  width="15"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7 19V13H17V19H19V7.82843L16.1716 5H5V19H7ZM4 3H17L21 7V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM9 15V19H15V15H9Z"></path>
+                </svg>
+              
+            </button> :
+            <button
+              className="rounded-full bg-black px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              onClick={handleSetEditable }
+            >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#fff"
+                  height="15"
+                  width="15"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12.8995 6.85453L17.1421 11.0972L7.24264 20.9967H3V16.754L12.8995 6.85453ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path>
+                </svg>
+            
+            </button>
+          }
           <button
             type="button"
             className="rounded-full bg-black px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"

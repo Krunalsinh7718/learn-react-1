@@ -10,6 +10,8 @@ function AddTodo() {
 
     event.preventDefault();
 
+    if(!todoTask) return;
+
     const todoObj = {
       id : Date.now(),
       task : todoTask,
