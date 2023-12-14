@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.strike-text{
+    position: relative;
+}
+.strike-text:before{
+    content: "";
+    display: block;
+    background-color: currentColor;
+    height: 2px;
+    margin-top: 2px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: strikeLineAnim 300ms ease-out;
+}
+
+@keyframes strikeLineAnim{
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}

@@ -1,25 +1,17 @@
 import { useTodoContext } from "../../context/TodoContext";
+import TodoItem from "./TodoItem";
 
 function TaskList() {
   const {todo} = useTodoContext();
+  // console.log("task list", todo );
     return (<>
-        <div className='w-full'>
+        <div className='w-full border-t border-white/10 pt-5'>
             <ul>
               {
-                todo.map( e => {})
+                todo.map( mapTodo => 
+                  (<TodoItem key={mapTodo.id} todo={mapTodo}/>)
+                )
               }
-              <li className='border p-3'>
-                <div className='flex gap-5'>
-                    <input type="checkbox" name="" id="chkid" />
-                  <label htmlFor="chkid" >
-                    <span>Task</span>
-                  </label>
-                  <input type="text" />
-                  <button>Save</button>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </div>
-              </li>
             </ul>
           </div>
     </>);
