@@ -1,6 +1,8 @@
 import {Account, Client, ID} from "appwrite";
 import conf from "../conf/conf";
 
+
+
 export class AuthService{
     client = new Client();
     account;
@@ -11,7 +13,9 @@ export class AuthService{
             .setProject(conf.appwriteProjectId);
 
         this.account = new Account(this.client);
-
+        // console.log("client ",this.client);
+        // this.account.get().then(data => console.log("data ",data))
+        
     }
 
     async createAccount({email, password, name}){
@@ -39,6 +43,11 @@ export class AuthService{
 
     async getCurrentUser(){
         try {
+//             console.log("appwriteUrl", conf.appwriteUrl);
+// console.log("appwriteProjectId", conf.appwriteProjectId);
+// console.log("appwriteDatabaseID", conf.appwriteDatabaseID);
+// console.log("appwriteCollectionId", conf.appwriteCollectionId);
+// console.log("appwriteBucketId", conf.appwriteBucketId);
             return await this.account.get();
         } catch (error) {
             console.log("Appwrite service :: getCurrentUser :: error ", error);
