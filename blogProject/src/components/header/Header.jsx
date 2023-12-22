@@ -1,15 +1,6 @@
-import { useSelector } from "react-redux";
-import Container from "../container/container";
-import Logo from "../logo/Logo";
-import { Link, useNavigate  } from "react-router-dom";
-import LogoutBtn from "./LogoutBtn";
-
+import Logo from "./Logo";
 
 function Header() {
-  const authStatus = useSelector((state) => state.auth.status);
-
-  const navigate = useNavigate();
-
   const navItems = [
     {
       name: 'Home',
@@ -19,56 +10,85 @@ function Header() {
     {
       name: "Login",
       slug: "/login",
-      active: !authStatus,
+      active: true,
   },
   {
       name: "Signup",
       slug: "/signup",
-      active: !authStatus,
+      active: true,
   },
   {
       name: "All Posts",
       slug: "/all-posts",
-      active: authStatus,
+      active: true,
   },
   {
       name: "Add Post",
       slug: "/add-post",
-      active: authStatus,
+      active: true,
   },
   ]
-    return ( <>
-     <header className='py-3 shadow bg-gray-500'>
-      <Container>
-        <nav className='flex'>
-          <div className='mr-4'>
-            <Link to='/'>
-              <Logo width='70px'   />
 
-              </Link>
+
+  return (
+    <>
+      <div className="relative w-full bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center space-x-2">
+            <span>
+              <Logo />
+            </span>
           </div>
-          <ul className='flex ml-auto'>
-            {navItems.map((item) => 
-            item.active ? (
-              <li key={item.name}>
-                <button
-                onClick={() => navigate(item.slug)}
-                className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
-                >{item.name}</button>
-              </li>
-            ) : null
-            )} 
-
-            {
-              authStatus && (
-                <li><LogoutBtn /></li>
-              )
-            }
-          </ul>
-        </nav>
-        </Container>
-    </header>
-    </> );
+          <div className="hidden lg:block">
+            <ul className="inline-flex space-x-8">
+              {
+                navItems.map(item => item.active ? (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ): null)
+              }
+              
+              
+            </ul>
+          </div>
+          <div className="hidden lg:block">
+            <button
+              type="button"
+              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              Logout
+            </button>
+            <button
+              type="button"
+              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              Login
+            </button>
+          </div>
+          <div className="lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={24}
+              height={24}
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+            >
+              <path d="M4 12h16M4 6h16M4 18h16" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Header;
