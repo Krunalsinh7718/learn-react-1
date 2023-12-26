@@ -1,60 +1,61 @@
 import Logo from "./Logo";
+import {Link, NavLink} from 'react-router-dom';
 
 function Header() {
   const navItems = [
     {
       name: 'Home',
       slug: "/",
-      active: true
+      allow: true
     }, 
     {
       name: "Login",
       slug: "/login",
-      active: true,
+      allow: true,
   },
   {
       name: "Signup",
       slug: "/signup",
-      active: true,
+      allow: true,
   },
   {
       name: "All Posts",
       slug: "/all-posts",
-      active: true,
+      allow: true,
   },
   {
       name: "Add Post",
       slug: "/add-post",
-      active: true,
+      allow: true,
   },
   ]
 
 
   return (
     <>
+    
       <div className="relative w-full bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
           <div className="inline-flex items-center space-x-2">
             <span>
-              <Logo />
+              <Link to="/">
+                <Logo />
+              </Link>
             </span>
           </div>
           <div className="hidden lg:block">
             <ul className="inline-flex space-x-8">
               {
-                navItems.map(item => item.active ? (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-sm font-semibold text-gray-800 hover:text-gray-900"
-                    >
+                navItems.map(item => item.allow ? (
+                  <li key={item.name}>
+                    <NavLink 
+                      to={item.slug}
+                      className="text-sm font-semibold text-gray-800 hover:text-gray-900">
                       {item.name}
-                    </a>
+                      </NavLink>
                   </li>
                 ): null)
               }
-              
-              
             </ul>
           </div>
           <div className="hidden lg:block">

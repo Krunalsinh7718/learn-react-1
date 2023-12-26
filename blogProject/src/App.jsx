@@ -1,20 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Header, Home } from './components'
+import "./App.css";
+import { Header, Home } from "./components";
+import { Outlet } from "react-router-dom";
+import conf from "./conf/conf";
+import authService from "./appwrite/auth";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
-     <Header />
-     <main>
-      <Home />
-     </main>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
