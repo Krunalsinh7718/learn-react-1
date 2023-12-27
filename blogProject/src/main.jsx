@@ -11,6 +11,8 @@ import AllPost from "./components/AllPost.jsx";
 import PageLayout from "./PageLayout.jsx";
 import EditPost from "./components/EditPost.jsx";
 import Post from "./components/Post.jsx";
+import { Provider } from 'react-redux'
+import store from "./store/store.js";
 
 const routes = createBrowserRouter([
   {
@@ -24,7 +26,7 @@ const routes = createBrowserRouter([
       {
         path: "/all-posts",
         element: (
-        <PageLayout authentication={false}>
+        <PageLayout authentication>
           <AllPost />
         </PageLayout>
         ),
@@ -32,7 +34,7 @@ const routes = createBrowserRouter([
       {
         path: "/add-post",
         element: (
-        <PageLayout authentication={false}>
+        <PageLayout authentication>
           <CreatePost />
         </PageLayout>
         ),
@@ -40,7 +42,7 @@ const routes = createBrowserRouter([
       {
         path: "/edit-post/:slug",
         element: (
-        <PageLayout authentication={false}>
+        <PageLayout authentication>
           <EditPost />
         </PageLayout>
         ),
@@ -48,7 +50,7 @@ const routes = createBrowserRouter([
       {
         path: "/post/:slug",
         element: (
-        <PageLayout authentication={false}>
+        <PageLayout authentication>
           <Post />
         </PageLayout>
         ),
@@ -66,5 +68,7 @@ const routes = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={routes} />
+  <Provider store={store}>
+    <RouterProvider router={routes} />
+  </Provider>
 );

@@ -1,7 +1,12 @@
 import Logo from "./Logo";
-import {Link, NavLink} from 'react-router-dom';
+import {Link, NavLink, useNavigate} from 'react-router-dom';
+import LogoutBtn from "./LogoutBtn";
+import { useSelector } from "react-redux";
 
 function Header() {
+  const navigate = useNavigate();
+  const authStatus = useSelector(state => state.auth.status);
+
   const navItems = [
     {
       name: 'Home',
@@ -11,24 +16,25 @@ function Header() {
     {
       name: "Login",
       slug: "/login",
-      allow: true,
+      allow: !authStatus,
   },
   {
       name: "Signup",
       slug: "/signup",
-      allow: true,
+      allow: !authStatus,
   },
   {
       name: "All Posts",
       slug: "/all-posts",
-      allow: true,
+      allow: authStatus,
   },
   {
       name: "Add Post",
       slug: "/add-post",
-      allow: true,
+      allow: authStatus,
   },
   ]
+
 
 
   return (
@@ -59,18 +65,20 @@ function Header() {
             </ul>
           </div>
           <div className="hidden lg:block">
-            <button
-              type="button"
-              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
-              Logout
-            </button>
-            <button
-              type="button"
-              className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            >
-              Login
-            </button>
+            {
+              authStatus ? (
+                <LogoutBtn />
+              ) : (
+              <button
+                type="button"
+                className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+              )
+            }
+         
           </div>
           <div className="lg:hidden">
             <svg

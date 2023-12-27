@@ -4,9 +4,29 @@ import { Outlet } from "react-router-dom";
 import conf from "./conf/conf";
 import authService from "./appwrite/auth";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./store/authSlice";
 
-function App() {
+ function App () {
   
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   authService.getCurrentUser()
+   .then((userData) => {
+    console.log(userData);
+    if(userData){
+      dispatch(login({userData}))
+    }else{
+      dispatch(logout())
+    }
+   })
+   .catch(error => {
+    console.log("error >> app >> currentUser", error);
+   })
+   .finally(() => console.log("Its done."))
+  },[])
+
 
   return (
     <>
