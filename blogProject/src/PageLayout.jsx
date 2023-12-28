@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { Header } from "./components";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 

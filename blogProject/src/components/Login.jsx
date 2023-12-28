@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
 import Input from "./Input";
 import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
@@ -17,10 +18,10 @@ function Login() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const notify = () => toast("Wow so easy!");
 
   const handleLogin = async (data) => {
     setSignInError(null);
-    console.log(data);
     try {
       const appwriteUser = await authService.login(data);
 
@@ -30,7 +31,10 @@ function Login() {
         const appwriteCurrentUser = await authService.getCurrentUser();
         console.log("current user : ", appwriteCurrentUser);
 
-        if (appwriteCurrentUser) dispatch(login(appwriteCurrentUser));
+        if (appwriteCurrentUser) {
+          dispatch(login(appwriteCurrentUser))
+          toast.success("Login Successful");
+        };
         navigate("/");
       }
     } catch (error) {

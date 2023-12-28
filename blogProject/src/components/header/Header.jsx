@@ -13,16 +13,6 @@ function Header() {
       slug: "/",
       allow: true
     }, 
-    {
-      name: "Login",
-      slug: "/login",
-      allow: !authStatus,
-  },
-  {
-      name: "Signup",
-      slug: "/signup",
-      allow: !authStatus,
-  },
   {
       name: "All Posts",
       slug: "/all-posts",

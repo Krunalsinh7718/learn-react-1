@@ -4,6 +4,8 @@ import App from "./App.jsx";
 import "./index.css";
 import Home from "./components/Home.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import CreatePost from "./components/CreatePost.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
@@ -70,5 +72,6 @@ const routes = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={routes} />
+    <ToastContainer position="bottom-right"/>
   </Provider>
 );
