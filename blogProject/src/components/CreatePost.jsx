@@ -5,16 +5,46 @@ import { useForm } from "react-hook-form";
 import Select from "./Select";
 import { ErrorMessage } from "@hookform/error-message";
 import Button from "./Button";
+import service from "../appwrite/config";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
-function CreatePost() {
+function  CreatePost () {
+
+    
+    const user = useSelector(state => {
+        // console.log(state);
+        return state.auth.userData
+    } );
+    useEffect(() => {
+        console.log(user);
+    },[user])
+
+    
     const { register, formState: { errors }, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
            
         },
     });
 
-    const handlePost = (data) => {
+    const handlePost = async (data) => {
+        const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
+
         
+        if(file){
+            console.log("file ", file);
+
+            const fileId = file.$id;
+            data.featuredImage = fileId;
+            const dbPost = await service.CreatePost({...data, userId : user.$id});
+
+            if(dbPost){
+                toast.success("Post created successfully");
+            }
+
+        }
+
     }
     
     return (<>

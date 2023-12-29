@@ -26,4 +26,27 @@ export class Service{
             return false
         }
     }
+
+    async CreatePost ({title, slug, content, featuredImage, status, userId}){
+        try {
+            return await this.databases.createDocument(
+                conf.VITE_APPWRITE_DATABASE_ID,
+                conf.VITE_APPWRITE_COLLECTION_ID,
+                slug,
+                {
+                    title,
+                    content,
+                    featuredImage,
+                    status,
+                    userId
+                }
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: createPost :: error", error);
+            return false
+        }
+    }
 }
+
+const service = new Service();
+export default service;
