@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { toast } from 'react-toastify';
+
 import Input from "./Input";
 import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
@@ -18,7 +18,7 @@ function Login() {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const notify = () => toast("Wow so easy!");
+
 
   const handleLogin = async (data) => {
     setSignInError(null);
