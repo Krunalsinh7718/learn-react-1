@@ -6,6 +6,7 @@ export class Service{
     databases;
     bucket;
 
+
     constructor(){
         this.client
         .setEndpoint(conf.VITE_APPWRITE_URL)
@@ -43,6 +44,91 @@ export class Service{
             )
         } catch (error) {
             console.log("Appwrite serive :: createPost :: error", error);
+            return false
+        }
+    }
+
+    async UpdatePost ({title, slug, content, featuredImage, status, userId}){
+        try {
+            return await this.databases.createDocument(
+                conf.VITE_APPWRITE_DATABASE_ID,
+                conf.VITE_APPWRITE_COLLECTION_ID,
+                slug,
+                {
+                    title,
+                    content,
+                    featuredImage,
+                    status,
+                    userId
+                }
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: createPost :: error", error);
+            return false
+        }
+    }
+
+    async getPost (postId){
+        try {
+            return await this.databases.getDocument(
+                conf.VITE_APPWRITE_DATABASE_ID,
+                conf.VITE_APPWRITE_COLLECTION_ID,
+                postId
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: getPost :: error", error);
+            return false
+        }
+    }
+
+    getFilePreview (fileId){
+        try {
+            return this.bucket.getFilePreview(
+                conf.VITE_APPWRITE_BUCKET_ID,
+                fileId
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: getFilePreview :: error", error);
+            return false
+        }
+    }
+    async getPosts(queries = [Query.equal("status", "active")]){
+        try {
+            return await this.databases.listDocuments(
+                conf.VITE_APPWRITE_DATABASE_ID,
+                conf.VITE_APPWRITE_COLLECTION_ID,
+                queries,
+                
+
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: getPosts :: error", error);
+            return false
+        }
+    }
+    async deletePost(slug){
+        try {
+            await this.databases.deleteDocument(
+                conf.VITE_APPWRITE_DATABASE_ID,
+                conf.VITE_APPWRITE_COLLECTION_ID,
+                slug
+            )
+            return true
+        } catch (error) {
+            console.log("Appwrite serive :: deletePost :: error", error);
+            return false
+        }
+    }
+
+    async deleteFile(fileId){
+        try {
+            await this.bucket.deleteFile(
+                conf.appwriteBucketId,
+                fileId
+            )
+            return true
+        } catch (error) {
+            console.log("Appwrite serive :: deleteFile :: error", error);
             return false
         }
     }

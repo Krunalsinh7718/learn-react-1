@@ -37,7 +37,7 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      console.log("login error => ", error);
+      toast.error(`login error => ${error}`);
       setSignInError(error);
     }
   };

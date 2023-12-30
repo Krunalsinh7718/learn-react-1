@@ -6,7 +6,7 @@ import Home from "./components/Home.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CreatePost from "./components/CreatePost.jsx";
+import AddEditPost from "./components/AddEditPost.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import AllPost from "./components/AllPost.jsx";
@@ -37,7 +37,7 @@ const routes = createBrowserRouter([
         path: "/add-post",
         element: (
         <PageLayout authentication>
-          <CreatePost />
+          <AddEditPost />
         </PageLayout>
         ),
       },
@@ -45,7 +45,7 @@ const routes = createBrowserRouter([
         path: "/edit-post/:slug",
         element: (
         <PageLayout authentication>
-          <EditPost />
+          <AddEditPost />
         </PageLayout>
         ),
       },
@@ -57,6 +57,10 @@ const routes = createBrowserRouter([
         </PageLayout>
         ),
       },
+      {
+        path: "/post/:slug",
+        element: <Post />,
+    },
     ],
   },
   {
