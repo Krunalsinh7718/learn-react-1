@@ -6,11 +6,14 @@ import { useDispatch } from "react-redux";
 import Input from "./Input";
 import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
+import { toast } from "react-toastify";
+import DataLoader from "./DataLoader";
 
 function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [signupError, setSignUpError] = useState(null);
+  const [dataLoading, setDataLoading] = useState(false);
+
 
   const {
     register,
@@ -19,9 +22,10 @@ function Signup() {
   } = useForm();
 
   const create = async (data) => {
-    setSignUpError(null);
+    setDataLoading(true)
     try {
       const appwriteUser = await authService.createAccount(data);
+      toast.success(`Account created successfully.`);
 
       if (appwriteUser) {
         console.log("create account data : ", appwriteUser);
@@ -29,12 +33,16 @@ function Signup() {
         const appwriteCurrentUser = await authService.getCurrentUser();
         console.log("current user : ", appwriteCurrentUser);
 
-        if (appwriteCurrentUser) dispatch(login(appwriteCurrentUser));
+        if (appwriteCurrentUser) {
+          dispatch(login(appwriteCurrentUser));
+          setDataLoading(false);
+        }
         navigate("/");
       }
     } catch (error) {
       console.log("create account error => ", error);
-      setSignUpError(error);
+      toast.error(`error >> signup >> ${error}`);
+      setDataLoading(false);
     }
   };
 
@@ -50,66 +58,80 @@ function Signup() {
               <p className="mt-2 text-base text-gray-600">
                 Already have an account?
                 <Link
-                  className="font-medium text-black transition-all duration-200 hover:underline"
+                  className="font-medium text-black transition-all duration-200 hover:underline ml-2"
                   to="/login"
                 >
                   Sign In
                 </Link>
               </p>
-              {String(signupError)}
               <form onSubmit={handleSubmit(create)} className="mt-8">
                 <div className="space-y-5">
-                  <Input
-                    label="Name"
-                    {...register("name", {
-                      required: "This is required.",
-                      maxLength: {
-                        value: 20,
-                        message: "Maximum 20 character allowed.",
-                      },
-                    })}
-                  />
-                  <ErrorMessage errors={errors} name="name" />
+                  <div>
+                    <Input
+                      label="Name"
+                      {...register("name", {
+                        required: "This is required.",
+                        maxLength: {
+                          value: 20,
+                          message: "Maximum 20 character allowed.",
+                        },
+                      })}
+                    />
+                    <div className="text-red-600">
+                      <ErrorMessage errors={errors} name="name" />
+                    </div>
+                  </div>
+                  <div>
 
-                  <Input
-                    label="Email"
-                    type="email"
-                    {...register("email", { required: "This is required." })}
-                  />
-                  <ErrorMessage errors={errors} name="email" />
-
-                  <Input
-                    label="Password"
-                    type="Password"
-                    {...register("password", {
-                      required: "This is required.",
-                      minLength: {
-                        value: 8,
-                        message: "Minimum 8 character required.",
-                      },
-                    })}
-                  />
-                  <ErrorMessage errors={errors} name="password" />
+                    <Input
+                      label="Email"
+                      type="email"
+                      {...register("email", { required: "This is required." })}
+                    />
+                    <div className="text-red-600">
+                      <ErrorMessage errors={errors} name="email" />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Input
+                      label="Password"
+                      type="Password"
+                      {...register("password", {
+                        required: "This is required.",
+                        minLength: {
+                          value: 8,
+                          message: "Minimum 8 character required.",
+                        },
+                      })}
+                    />
+                    <div className="text-red-600">
+                      <ErrorMessage errors={errors} name="password" />
+                    </div>
+                  </div>
 
                   <div>
                     <button
                       type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                      className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                     >
-                      Create Account 
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={16}
-                        height={16}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
+                       {!dataLoading ? (<>
+                        Create Account 
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={16}
+                          height={16}
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </>) :
+                      (<DataLoader button light/>)}
                     </button>
                   </div>
                 </div>
