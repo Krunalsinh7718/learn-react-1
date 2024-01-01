@@ -1,5 +1,9 @@
 function SignIn() {
-    return ( <>SignIn</> );
+    return (<>
+        <Container>
+            SignIn
+        </Container>
+    </>);
 }
 
 export default SignIn;

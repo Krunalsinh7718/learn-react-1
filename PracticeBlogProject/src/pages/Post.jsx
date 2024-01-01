@@ -1,5 +1,9 @@
 function Post() {
-    return ( <>Post</> );
+    return (<>
+        <Container>
+            Post
+        </Container>
+    </>);
 }
 
 export default Post;

@@ -1,5 +1,9 @@
 function EditPost() {
-    return (<>EditPost</>);
+    return (<>
+        <Container>
+            EditPost
+        </Container>
+    </>);
 }
 
 export default EditPost;

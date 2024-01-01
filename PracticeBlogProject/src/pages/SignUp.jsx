@@ -1,5 +1,9 @@
 function SignUp() {
-    return ( <>SignUp</> );
+    return (<>
+        <Container>
+            SignIn
+        </Container>
+    </>);
 }
 
 export default SignUp;

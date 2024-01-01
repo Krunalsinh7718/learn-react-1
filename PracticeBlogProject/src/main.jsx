@@ -10,6 +10,8 @@ import {AddPost,
   Post,
   SignIn,
   SignUp} from './pages/';
+import {Provider} from "react-redux";
+import Store from "./store/store.js";
 
 const routes = createBrowserRouter([
   {
@@ -50,6 +52,8 @@ const routes = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={routes} />
+    <Provider store={Store}>
+      <RouterProvider router={routes} />
+    </Provider>
   </React.StrictMode>,
 )

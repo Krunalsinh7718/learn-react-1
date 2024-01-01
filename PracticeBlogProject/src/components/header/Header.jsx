@@ -44,7 +44,7 @@ function Header() {
           <div className="hidden lg:block">
             <ul className="inline-flex space-x-8">
               {
-                menu.map(link => link.allow ? <li><NavLink to={link.slug}>{link.item}</NavLink></li> : null)
+                menu.map(link => link.allow ? <li key={link.item}><NavLink to={link.slug}>{link.item}</NavLink></li> : null)
               }
             </ul>
           </div>
