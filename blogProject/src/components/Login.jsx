@@ -94,6 +94,7 @@ function Login() {
                     <button
                       type="submit"
                       className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                      disabled={dataLoading}
                     >
                       {!dataLoading ? (<>
                         Get started
@@ -112,7 +113,6 @@ function Login() {
                         </svg>
                       </>) :
                       (<DataLoader button light/>)}
-                     {/* <div>Hello</div> */}
                     </button>
                   </div>
                 </div>

@@ -48,9 +48,9 @@ export class Service{
         }
     }
 
-    async UpdatePost ({title, slug, content, featuredImage, status, userId}){
+    async UpdatePost (slug, {title, content, featuredImage, status}){
         try {
-            return await this.databases.createDocument(
+            return await this.databases.updateDocument(
                 conf.VITE_APPWRITE_DATABASE_ID,
                 conf.VITE_APPWRITE_COLLECTION_ID,
                 slug,
@@ -58,12 +58,11 @@ export class Service{
                     title,
                     content,
                     featuredImage,
-                    status,
-                    userId
+                    status
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error", error);
+            console.log("Appwrite serive :: UpdatePost :: error", error);
             return false
         }
     }
@@ -123,7 +122,7 @@ export class Service{
     async deleteFile(fileId){
         try {
             await this.bucket.deleteFile(
-                conf.appwriteBucketId,
+                conf.VITE_APPWRITE_BUCKET_ID,
                 fileId
             )
             return true

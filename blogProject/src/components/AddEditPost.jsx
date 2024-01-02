@@ -21,26 +21,31 @@ function  AddEditPost () {
     } );
 
     const {slug} = useParams();
-    const [postImageId, setPostImageId] = useState();
+    const [oldPost, setOldPost] = useState(null);
 
     useEffect(() => {
-        if(slug){
-            const post = service.getPost(slug).then((rpost) => {
-                console.log(rpost);
-                if (rpost) {
-                    // rpost.setValue("slug",slugTransform(val.title), {shouldValidate: true})
-                    rpost.title ? setValue("title",rpost.title, {shouldValidate: true}) : "";
-                    rpost.slug ? setValue("slug",rpost.slug, {shouldValidate: true}) : "";
-                    rpost.content ? setValue("content",rpost.content, {shouldValidate: true}) : "";
-                    rpost.status ? setValue("title",rpost.title, {shouldValidate: true}) : "";
-                    setPostImageId(rpost.featuredImage);
-                } else {
-                    toast.error(`error >> Post not found.`);
-                    navigate("/");
-                }
-              });
-        }
+        getPostData();
     },[slug]);
+
+    const getPostData = async () => {
+        if(slug){
+            const rpost = await service.getPost(slug);
+            // console.log("rpost",rpost);
+            setOldPost(rpost);
+            // console.log("oldPost", rpost);
+            rpost.title ? setValue("title",rpost.title, {shouldValidate: true}) : "";
+            rpost.slug ? setValue("slug",rpost.slug, {shouldValidate: true}) : "";
+            rpost.content ? setValue("content",rpost.content, {shouldValidate: true}) : "";
+            rpost.status ? setValue("title",rpost.title, {shouldValidate: true}) : "";
+
+            if(!rpost){
+
+                toast.error(`error >> Post not found.`);
+                navigate("/");
+            }
+              
+        }
+    }
     
 
     
@@ -68,12 +73,12 @@ function  AddEditPost () {
                 const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
 
                 if (file) {
-                    service.deleteFile(post.featuredImage);
+                    service.deleteFile(oldPost.featuredImage);
                 }
 
-                const dbPost = await service.updatePost(post.$id, {
+                const dbPost = await service.UpdatePost(oldPost.$id, {
                     ...data,
-                    featuredImage: file ? file.$id : undefined,
+                    featuredImage: file ? file.$id : oldPost.featuredImage,
                 });
 
                 if (dbPost) {
@@ -133,13 +138,13 @@ function  AddEditPost () {
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image",  { required: "This is required." })}
+                    {...register("image",  { required: !slug })}
                 />
-               {slug && (
+               { slug && oldPost && (
                     <div className="w-full mb-4">
                         <img
-                            src={service.getFilePreview(postImageId)}
-                            alt={postImageId}
+                            src={service.getFilePreview(oldPost?.featuredImage)}
+                            alt={oldPost?.featuredImage}
                             className="rounded-lg"
                         />
                     </div>

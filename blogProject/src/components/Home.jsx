@@ -18,15 +18,17 @@ function Home() {
             Query.orderDesc("title"),
             Query.limit(3)
         ]
-        service.getPosts(query).then((data) => {
+        service.getPosts(query)
+        .then((data) => {
             if(data && data.total > 0){
                 setPosts(data.documents);
-                setDataLoading(false)
+                
             }else{
                 navigate("/")
                 toast.error(`error >> No posts found`);
             }
         })
+        .finally(() => setDataLoading(false))
     },[])
 
     // useEffect(() => {
