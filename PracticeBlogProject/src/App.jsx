@@ -1,5 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./components";
+import { useEffect } from "react";
+import service from "./appwrite/AuthService";
+import { useDispatch } from "react-redux";
+import { login } from "./store/authSlice";
 
 function App() {
   // console.log("projectURL", conf.appwriteProjectUrl);
@@ -9,6 +13,24 @@ function App() {
   // console.log("appwriteBucketId", conf.appwriteBucketId);
   // console.log("tinymiceApiKey", conf.tinymiceApiKey);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   
+      service.getCurrentUser().then((user) => {
+        
+        if(user){
+          dispatch(login(user));
+        }else{
+          dispatch(logout());
+        }
+      })
+      .catch(error => {
+        console.log("error >> app >> currentUser", error);
+       })
+       .finally(() => console.log("Its done."))
+   
+  },[])
   return (
     <>
       <Header />
