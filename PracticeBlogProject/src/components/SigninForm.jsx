@@ -28,10 +28,10 @@ function SigninForm() {
       if (loginUser) {
         const currentUser = await service.getCurrentUser();
         console.log("signin current user", currentUser);
+        toast.success("User login successfully.");
 
         if (currentUser) {
           dispatch(login(currentUser));
-          toast.success("User login successfully.");
           setDataLoading(false);
           navigate("/");
         }

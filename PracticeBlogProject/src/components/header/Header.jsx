@@ -2,10 +2,13 @@ import Container from "../Container";
 import {NavLink} from "react-router-dom"
 import LogoutButton from "./LogoutButton";
 import { useSelector } from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 
 function Header() {
   const authStatus = useSelector(state => state.auth.status );
+
+  const navigate = useNavigate();
 
   const menu = [
     {
