@@ -14,9 +14,9 @@ import { login, logout } from "./store/authSlice";
   useEffect(() => {
    authService.getCurrentUser()
    .then((userData) => {
-    // console.log(userData);
+    console.log("App jsx :",userData);
     if(userData){
-      dispatch(login({userData}))
+      dispatch(login(userData))
     }else{
       dispatch(logout())
     }

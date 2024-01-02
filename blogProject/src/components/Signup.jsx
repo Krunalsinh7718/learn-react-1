@@ -22,7 +22,7 @@ function Signup() {
   } = useForm();
 
   const create = async (data) => {
-    setDataLoading(true)
+    setDataLoading(true);
     try {
       const appwriteUser = await authService.createAccount(data);
       toast.success(`Account created successfully.`);

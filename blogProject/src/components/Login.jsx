@@ -27,7 +27,6 @@ function Login() {
       const appwriteUser = await authService.login(data);
 
       if (appwriteUser) {
-        console.log("create account data : ", appwriteUser);
 
         const appwriteCurrentUser = await authService.getCurrentUser();
         console.log("current user : ", appwriteCurrentUser);
