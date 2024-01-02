@@ -1,7 +1,10 @@
+import {SignupForm, Container} from "../components";
+ 
+
 function SignUp() {
     return (<>
         <Container>
-            SignIn
+            <SignupForm />
         </Container>
     </>);
 }
