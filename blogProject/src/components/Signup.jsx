@@ -22,7 +22,7 @@ function Signup() {
   } = useForm();
 
   const create = async (data) => {
-    setDataLoading(true);
+    setDataLoading(true)
     try {
       const appwriteUser = await authService.createAccount(data);
       toast.success(`Account created successfully.`);
@@ -35,11 +35,9 @@ function Signup() {
 
         if (appwriteCurrentUser) {
           dispatch(login(appwriteCurrentUser));
+          setDataLoading(false);
         }
         navigate("/");
-        setDataLoading(false);
-      }else{
-        setDataLoading(false);
       }
     } catch (error) {
       console.log("create account error => ", error);
@@ -116,7 +114,6 @@ function Signup() {
                     <button
                       type="submit"
                       className="h-14 h-14 inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
-                      disabled={dataLoading}
                     >
                        {!dataLoading ? (<>
                         Create Account 
