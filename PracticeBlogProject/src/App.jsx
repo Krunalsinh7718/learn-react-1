@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./components";
 import { useEffect } from "react";
 import service from "./appwrite/AuthService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "./store/authSlice";
 
 function App() {
@@ -12,6 +12,8 @@ function App() {
   // console.log("appwriteCollectionId", conf.appwriteCollectionId);
   // console.log("appwriteBucketId", conf.appwriteBucketId);
   // console.log("tinymiceApiKey", conf.tinymiceApiKey);
+
+  const authStatus = useSelector(state => state.auth.status);
 
   const dispatch = useDispatch();
 
@@ -28,12 +30,13 @@ function App() {
       .catch(error => {
         console.log("error >> app >> currentUser", error);
        })
-       .finally(() => console.log("Its done."))
+       .finally(() => console.log("main layout data fetch process done."))
    
   },[])
   return (
     <>
-      <Header />
+    {authStatus && <Header />}
+      
       <Outlet />
     </>
   );

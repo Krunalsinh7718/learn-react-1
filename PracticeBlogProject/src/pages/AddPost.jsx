@@ -1,9 +1,9 @@
-import { Container } from "../components";
+import { Container, AddEditPost } from "../components";
 
 function AddPost() {
     return (<>
         <Container>
-            AddPost
+            <AddEditPost />
         </Container>
     </>);
 }

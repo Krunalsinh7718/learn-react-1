@@ -13,7 +13,7 @@ function Header() {
   const menu = [
     {
       item : "home",
-      slug : "/home",
+      slug : "/",
       allow : true
     },
     {

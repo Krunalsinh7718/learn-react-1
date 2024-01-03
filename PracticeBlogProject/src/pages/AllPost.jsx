@@ -1,3 +1,4 @@
+import { Container } from "../components";
 function AllPost() {
     return (<>
         <Container>

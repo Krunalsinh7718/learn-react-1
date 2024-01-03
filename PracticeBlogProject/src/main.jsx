@@ -12,7 +12,7 @@ import {
   SignIn,
   SignUp,
 } from "./pages/";
-import { AuthLayout } from "./components";
+import { AuthLayout, MainPageLayout } from "./components";
 import { Provider } from "react-redux";
 import Store from "./store/store.js";
 import { ToastContainer } from 'react-toastify';
@@ -55,24 +55,25 @@ const routes = createBrowserRouter([
         path: "/post",
         element: <Post />
       },
+      {
+        path: "/signin",
+        element: (
+          <AuthLayout authentication={false}>
+            <SignIn />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/signup",
+        element: (
+          <AuthLayout authentication={false}>
+            <SignUp />
+          </AuthLayout>
+        ),
+      },
     ],
-  },
-  {
-    path: "/signin",
-    element: (
-      <AuthLayout authentication={false}>
-        <SignIn />
-      </AuthLayout>
-    ),
-  },
-  {
-    path: "/signup",
-    element: (
-      <AuthLayout authentication={false}>
-        <SignUp />
-      </AuthLayout>
-    ),
-  },
+  }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
