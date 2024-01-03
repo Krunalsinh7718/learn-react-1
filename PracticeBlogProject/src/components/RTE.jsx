@@ -21,7 +21,7 @@ function RTE({ name, control, label, defaultValue = "" }) {
                         <Editor
 
                             initialValue={defaultValue}
-                            apiKey={conf.VITE_TINYMCE_API_KEY}
+                            apiKey={conf.tinymiceApiKey}
                             init={{
                                 height: 500,
                                 menubar: false,

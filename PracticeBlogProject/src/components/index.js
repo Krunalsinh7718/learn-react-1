@@ -9,5 +9,6 @@ import AuthLayout from "./AuthLayout";
 import DataLoader from "./DataLoader";
 import MainPageLayout from "./MainPageLayout"
 import AddEditPost from "./AddEditPost"
+import CustSelect from "./CustSelect"
 
-export {Header, Footer, Container, SigninForm, SignupForm, Input, Select, AuthLayout, DataLoader,MainPageLayout,AddEditPost }
+export {Header, Footer, Container, SigninForm, SignupForm, Input, Select, AuthLayout, DataLoader,MainPageLayout,AddEditPost , CustSelect}
