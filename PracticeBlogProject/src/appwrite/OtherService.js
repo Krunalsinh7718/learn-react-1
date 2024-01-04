@@ -5,6 +5,7 @@ export class OtherService {
     client = new Client();
     account;
     databases ;
+    storage ;
 
     constructor() {
         this.client
@@ -13,6 +14,7 @@ export class OtherService {
 
         this.account = new Account(this.client);
         this.databases = new Databases(this.client);
+        this.storage = new Storage(this.client);
     }
 
     async createPost({title, slug, content, articleImageId, status, userId}){
@@ -33,6 +35,15 @@ export class OtherService {
             console.log("Appwrite other service :: createPost :: error", error);
             return false
         }
+    }
+
+    async uploadFile(){
+        
+const promise = storage.createFile(
+    '[BUCKET_ID]',
+    ID.unique(),
+    document.getElementById('uploader').files[0]
+);
     }
     
 
