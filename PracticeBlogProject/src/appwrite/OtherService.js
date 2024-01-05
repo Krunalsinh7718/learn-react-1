@@ -1,11 +1,11 @@
-import { Client, Account, ID } from "appwrite";
+import { Client, Account, Databases, ID, Storage } from "appwrite";
 import conf from "../conf/conf.js";
 
 export class OtherService {
     client = new Client();
     account;
-    databases ;
-    storage ;
+    databases;
+    storage;
 
     constructor() {
         this.client
@@ -17,9 +17,9 @@ export class OtherService {
         this.storage = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, articleImageId, status, userId}){
+    async createPost({ title, slug, content, articleImageId, status, userId }) {
         try {
-            return await databases.createDocument(
+            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -33,19 +33,48 @@ export class OtherService {
             )
         } catch (error) {
             console.log("Appwrite other service :: createPost :: error", error);
-            return false
+            return false;
         }
     }
 
-    async uploadFile(){
-        
-const promise = storage.createFile(
-    '[BUCKET_ID]',
-    ID.unique(),
-    document.getElementById('uploader').files[0]
-);
-    }
     
+
+    async getPost(id) {
+        try {
+            return await this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                id);
+
+        } catch (error) {
+            console.log("Appwrite other service :: getPost :: error", error);
+            return false;
+        }
+    }
+    async uploadFile(file) {
+        try {
+            return await this.storage.createFile(
+                conf.appwriteBucketId,
+                ID.unique(),
+                file
+            );
+        } catch (error) {
+            console.log("Appwrite other service :: uploadFile :: error", error);
+            return false;
+        }
+    }
+
+    async getFile(fileId){
+        try {
+            return await storage.getFile(
+                conf.appwriteBucketId, 
+                fileId);
+        } catch (error) {
+            console.log("Appwrite other service :: getFile :: error", error);
+            return false;
+        }
+    }
+
 
 }
 

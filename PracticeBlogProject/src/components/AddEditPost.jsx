@@ -6,8 +6,14 @@ import { useForm } from "react-hook-form";
 import CustSelect from "./CustSelect";
 import Container from "./Container";
 import { useEffect } from "react";
+import service from "../appwrite/OtherService";
+import {useSelector} from "react-redux";
+import { toast } from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 function AddEditPost() {
+  const userDetails = useSelector(state => state.auth.userData);
+
   const {
     register,
     handleSubmit,
@@ -23,10 +29,23 @@ function AddEditPost() {
     { value: "vanilla", label: "Vanilla" },
   ];
   const handleAddEditForm = async (data) => {
-    // console.log(data);
+    console.log(data);
+    console.log("user data", userDetails);
     try {
-      const file = data.image[0]
-    } catch (error) {}
+      const file = data.image[0] ? await service.uploadFile(data.image[0]) : null; 
+      console.log(file);
+
+      if(file){
+        const dbPost = await service.createPost({...data, userId : userDetails.$id, articleImageId : file.$id})
+
+        if(dbPost){
+          console.log(dbPost);
+          toast.success("Post created successfully");
+        }
+      }
+    } catch (error) {
+      console.log("AddEdit post :: handleAddEditForm :: error", error);
+    }
   };
 
   const slugTransform = (val) => {

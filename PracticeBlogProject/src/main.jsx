@@ -52,7 +52,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/post",
+        path: "/post/:slug",
         element: <Post />
       },
       {
