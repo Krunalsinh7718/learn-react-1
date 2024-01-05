@@ -1,4 +1,4 @@
-import { Client, Account, Databases, ID, Storage } from "appwrite";
+import { Client, Account, Databases, ID, Storage, Query } from "appwrite";
 import conf from "../conf/conf.js";
 
 export class OtherService {
@@ -51,6 +51,49 @@ export class OtherService {
             return false;
         }
     }
+
+    async deletePost(documentId){
+        try {
+            return this.databases.deleteDocument(
+                conf.appwriteDatabaseId, 
+                conf.appwriteCollectionId, 
+                documentId);
+        } catch (error) {
+            console.log("Appwrite other service :: deletePost :: error", error);
+            return false;
+        }
+    }
+
+    async updatePost(documentId,{title, content, articleImageId, status}){
+        try {
+            return await this.databases.updateDocument(
+                conf.appwriteDatabaseId, 
+                conf.appwriteCollectionId,
+                documentId,
+                {
+                    title, 
+                    content, 
+                    articleImageId, 
+                    status
+                });
+        } catch (error) {
+            console.log("Appwrite other service :: updatePost :: error", error);
+            return false;
+        }
+    }
+
+    async getAllPost(queries = [Query.equal("status", "active")]){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId, 
+                conf.appwriteCollectionId,
+                queries);
+        } catch (error) {
+            console.log("Appwrite other service :: getAllPost :: error", error);
+            return false;
+        }
+    }
+
     async uploadFile(file) {
         try {
             return await this.storage.createFile(
@@ -66,7 +109,7 @@ export class OtherService {
 
     async getFile(fileId){
         try {
-            return await storage.getFile(
+            return await this.storage.getFile(
                 conf.appwriteBucketId, 
                 fileId);
         } catch (error) {
@@ -75,6 +118,28 @@ export class OtherService {
         }
     }
 
+    getFilePreview (fileId){
+        try {
+            return this.storage.getFilePreview(
+                conf.appwriteBucketId,
+                fileId
+            )
+        } catch (error) {
+            console.log("Appwrite serive :: getFilePreview :: error", error);
+            return false
+        }
+    }
+
+    async deleteFile(fileId){
+        try {
+            return await this.storage.deleteFile(
+                conf.appwriteBucketId, 
+                fileId);
+        } catch (error) {
+            console.log("Appwrite serive :: deleteFile :: error", error);
+            return false
+        }
+    }
 
 }
 

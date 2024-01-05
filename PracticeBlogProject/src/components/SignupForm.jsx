@@ -24,10 +24,15 @@ function SignupForm() {
     setDataLoading(true);
     try {
       const createUser = await service.createAccount(data);
-      toast.success("Account created successfully.");
-      console.log("signup createUser :", data);
+      if(createUser?.$id){
+        toast.success("Account created successfully.");
+        console.log("signup createUser :", data);
 
-      if (createUser) {
+      }else{
+        toast.error("Account already exist.");
+      }
+
+      if (createUser?.$id) {
         const currentUser = await service.getCurrentUser();
         console.log("sign up current user", currentUser);
 

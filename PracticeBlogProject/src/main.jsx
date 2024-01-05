@@ -44,7 +44,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/edit-post",
+        path: "/edit-post/:slug",
         element: (
           <AuthLayout authentication>
             <EditPost />
